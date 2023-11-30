@@ -4,3 +4,5 @@
 .Ruserdata
 renv
 renv.lock
+web_application/rsconnect/
+Testing.Rmd

@@ -44,3 +44,25 @@ v_database_path <- base::paste(v_prepared_data_path, "Coventry_Godiva.db", sep="
 
 # Load app functions ------
 base::source(v_functions_path)
+
+exam_scores <- data.frame(
+  row.names = c("patient_1"),
+  Error = 6.2,
+  Speed = 10,
+  Distance = 3.7,
+  Acceleration = 8.7,
+  Jerk = 7.9
+)
+
+# defines the limits for the scale on the
+max_min <- data.frame(
+  Error = c(20, 0), Speed = c(20, 0), Distance = c(20, 0),
+  Acceleration = c(20, 0), Jerk = c(20, 0)
+)
+rownames(max_min) <- c("Max", "Min")
+
+# Bind the variable ranges to the data
+radar_df <- rbind(max_min, exam_scores)
+student1_data <- radar_df[c("Max", "Min", "patient_1"), ]
+
+gpcog_score = c(1, 0, 0, 1, 1, 1, 1, 1, 0)

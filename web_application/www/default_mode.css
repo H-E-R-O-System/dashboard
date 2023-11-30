@@ -2,3 +2,71 @@
   color: #3F3F3F;
 }
 
+/* Dashbaord level */
+
+.data_container {
+  background-color: #F3ECDA;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.grid_title {
+  grid-area: "title";
+  font-size: 24px; font-weight: bold;
+}
+
+.grid_item {
+  display: flex; justify-content: center; align-items: center;
+}
+
+/* Overview level */
+.profile_container {
+  display: grid;
+  grid-template-areas:
+        'title title ring'
+        'age cond ring';
+  grid-template-columns: 20% 20% 60%;
+}
+
+.profile_title {
+  display: flex; justify-content: center; align-items: center;
+  grid-area: title; font-weight: bold; font-size: 24px;
+}
+
+/* Dashbaord level */
+.spiral_container {
+  display: grid;
+  grid-template-areas:
+        'title spiral_radar'
+        'spiral_score spiral_radar';
+  grid-template-columns: 30% 70%;
+
+}
+
+.gpcog_container {
+  display: grid;
+  grid-template-areas:
+        'title gpcog_score gpcog_bar';
+  grid-template-columns: 30% 20% 50%;
+}
+
+table, tr, td {
+  border-style: solid; border: 2px;
+}
+
+.gpcog_cell {
+  border-style: solid; border: 2px; width: 40px; height: inherit;
+  text-align: center;
+}
+
+.pss_container {
+  display: grid;
+  grid-template-areas:
+        'title pss_score';
+  grid-template-columns: 40% 60%;
+}
+
+.pss_score_holder {
+  display: flex; justify-content: center; align-items: center;
+  border-radius: 5px; grid-area: "pss_score";
+}
