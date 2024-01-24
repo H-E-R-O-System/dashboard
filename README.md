@@ -22,21 +22,13 @@ add [git\@github.com](mailto:git@github.com){.email}:H-E-R-O-System/dashboard.gi
 
 # Setting up virtual environment
 
-In the console, run
-
+## Creating the R environment.
+In the console, run the following commands. 
 ```{r}
 renv::init()
-```
-
-Now we need to install the project packages.
-
-Navigate to web_application/global.R
-
-Run the install warning to install required packages
-
-```{r}
-renv::install("shiny")
+renv::update()
 renv::snapshot()
+renv::activate()
 ```
 
 Now Restart R

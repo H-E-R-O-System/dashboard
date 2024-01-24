@@ -35,7 +35,7 @@ ui <- shiny::fluidPage(
         ## Well Panel to hold page data
         shiny::wellPanel(
           id = "patient_wp",
-          style = "background-color: #FFFFFF",
+          style = "background-color: #FFFFFFrenv::init",
           ### Start page contents ------
           tags$div(class="data_container",
             tags$div(class="profile_container",
@@ -103,15 +103,15 @@ ui <- shiny::fluidPage(
           ),
           tags$br(style="background-color: #F5F9FC; height: 50px"),
           tags$div(class = "data_container",
-                   tags$div(class="grid_title",
-                            "Affective Computing", style="color: #FFA384"
-                   )
+            tags$div(class="grid_title",
+              "Affective Computing", style="color: #FFA384"
+            )
           ),
           tags$br(style="background-color: #F5F9FC; height: 50px"),
           tags$div(class = "data_container",
-                   tags$div(class="grid_title",
-                            "Wisconsin Card Test", style="color: #FFA384"
-                   )
+            tags$div(class="grid_title",
+              "Wisconsin Card Test", style="color: #FFA384"
+            )
           )
         )
       )
