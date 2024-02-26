@@ -16,7 +16,7 @@ create_radarchart <- function(data, color = "#00AFBB",
   )
 }
 
-create_spinner <- function(x, colour="#89A7AD") {
+create_spinner <- function(x, colour) {
   tags$div(class="percent1", style=sprintf("stroke: %s; color: %s;", colour, colour),
     tags$svg(
      tags$circle(cx="70", cy="70", r="70"),

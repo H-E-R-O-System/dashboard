@@ -42,7 +42,7 @@ ui <- shiny::fluidPage(
               tags$div(class="profile_title", "John Doe"),
               tags$div(class="grid_item", style="grid-area: age", "Age: 45"),
               tags$div(class="grid_item", style="grid-area: cond", "Condition: Dementia"),
-              tags$div(class="grid_item", style="grid-area: ring", create_spinner(75))
+              tags$div(class="grid_item", style="grid-area: ring", create_spinner(75, colour=hero_blue))
             )
           )
         )
@@ -57,7 +57,7 @@ ui <- shiny::fluidPage(
           style = "background-color: #FFFFFF",
 
           tags$div(class="data_container",
-            tags$h1("Interview Summary", style="color:#000000; padding: 0px")
+            tags$h1("Interview Summary", style=paste0("color:", hero_blue, "; padding: 0px"), )
           ),
           tags$br(style="background-color: #F5F9FC; height: 50px"),
 
