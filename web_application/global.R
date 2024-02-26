@@ -67,3 +67,8 @@ radar_df <- rbind(max_min, exam_scores)
 student1_data <- radar_df[c("Max", "Min", "patient_1"), ]
 
 gpcog_score = c(1, 0, 0, 1, 1, 1, 1, 1, 0)
+
+
+hero_blue <-  "#274251"
+blue_2 <- "#89A7AD"
+blue_3 <- "#E6F1F7"
