@@ -23,7 +23,9 @@ add [git\@github.com](mailto:git@github.com){.email}:H-E-R-O-System/dashboard.gi
 # Setting up virtual environment
 
 ## Creating the R environment.
-In the console, run the following commands. 
+
+In the console, run the following commands.
+
 ```{r}
 renv::init()
 renv::update()

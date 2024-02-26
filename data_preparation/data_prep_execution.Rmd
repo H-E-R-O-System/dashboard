@@ -1,0 +1,32 @@
+Create Wisconsin tracking data
+
+## Import libaries
+
+```{r}
+library(lubridate)
+library(pracma)
+```
+
+## Create wisconsin card test data
+
+Wisconsin Card Game is has a score of 0-20
+
+```{r}
+
+weeks =10
+dropout = 2
+dropout_ids = pracma::randperm(1:weeks)[1:(weeks-dropout)]
+scores = base::round((30 - (1:weeks) * 0.5) + stats::rnorm(weeks, 0, 1))[dropout_ids]
+week_dates = seq.Date(from = lubridate::today() - lubridate::weeks(weeks), to = lubridate::today(), by = 'weeks')[dropout_ids]
+
+wisconsin_data <- data.frame(
+  date = week_dates, score = scores
+)
+
+nrow(wisconsin_data["score"])
+nrow(wisconsin_data["date"])
+
+save
+
+plot(wisconsin_data)
+```

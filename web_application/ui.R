@@ -44,6 +44,11 @@ ui <- shiny::fluidPage(
               tags$div(class="grid_item", style="grid-area: cond", "Condition: Dementia"),
               tags$div(class="grid_item", style="grid-area: ring", create_spinner(75, colour=hero_blue))
             )
+          ),
+          tags$br(style="background-color: #F5F9FC; height: 50px"),
+
+          tags$div(class="data_container",
+            "Wisconsin Card Test"
           )
         )
       ),
@@ -57,14 +62,14 @@ ui <- shiny::fluidPage(
           style = "background-color: #FFFFFF",
 
           tags$div(class="data_container",
-            tags$h1("Interview Summary", style=paste0("color:", hero_blue, "; padding: 0px"), )
+            tags$h1("Interview Summary", style=glue("color:{hero_blue}; padding: 0px"))
           ),
           tags$br(style="background-color: #F5F9FC; height: 50px"),
 
           ### Spiral Test ------
           tags$div(class = "data_container",
             tags$div(class="spiral_container",
-              tags$div(class="grid_title", "Spiral Test", style="color: #658EA9"),
+              tags$div(class="grid_title", "Spiral Test", style=glue("color:{hero_blue}")),
               tags$div(class="grid_item", style="grid-area: spiral_score", "20/100"),
               tags$div(class="grid_item", style="grid-area: spiral_radar",
                 ## Add radar graph
@@ -76,7 +81,7 @@ ui <- shiny::fluidPage(
           tags$br(style="background-color: #F5F9FC; height: 50px"),
           tags$div(class = "data_container",
             tags$div(class="gpcog_container",
-              tags$div(class="grid_title", style="color: #74BDCB",
+              tags$div(class="grid_title", style=glue("color: {hero_blue}"),
                 "GPCOG Test"
                 ),
               tags$div(class="grid_item", style="grid-area: gpcog_score",
@@ -92,7 +97,7 @@ ui <- shiny::fluidPage(
           tags$div(class = "data_container",
             tags$div(class="pss_container",
               tags$div(class="grid_title",
-                       "Percieved Stress Score", style="color: #FFA384"
+                       "Percieved Stress Score", style=glue("color: {hero_blue}"),
               ),
               tags$div(
                class="pss_score_holder",
@@ -104,13 +109,13 @@ ui <- shiny::fluidPage(
           tags$br(style="background-color: #F5F9FC; height: 50px"),
           tags$div(class = "data_container",
             tags$div(class="grid_title",
-              "Affective Computing", style="color: #FFA384"
+              "Affective Computing", style=glue("color: {hero_blue}"),
             )
           ),
           tags$br(style="background-color: #F5F9FC; height: 50px"),
           tags$div(class = "data_container",
             tags$div(class="grid_title",
-              "Wisconsin Card Test", style="color: #FFA384"
+              "Wisconsin Card Test", style=glue("color: {hero_blue}"),
             )
           )
         )
