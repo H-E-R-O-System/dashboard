@@ -5,28 +5,186 @@ Create Wisconsin tracking data
 ```{r}
 library(lubridate)
 library(pracma)
+library(rjson)
+library(jsonlite)
+library(request)
+library(stringr)
+library(dplyr)
+library(ggplot2)
+library(plotly)
 ```
 
 ## Create wisconsin card test data
 
-Wisconsin Card Game is has a score of 0-20
+```{r}
+wct_data_augmentation <- function(wct_data) {
+  answers = wct_data$answers
+  change_ids = wct_data$change_ids
+  change_ids = c(0, change_ids, length(answers))
+
+  diffs = diff(change_ids)
+  col_count = max(diffs)
+
+  rule_answers = list()
+  for (idx in 1:(length(change_ids)-1)) {
+    start_idx <- change_ids[idx]+1
+    end_idx <- change_ids[idx+1]
+
+    rule_set <- answers[start_idx:end_idx]
+    rule_answers[[idx]] = c(rule_set, array(dim=col_count-length(rule_set)))
+  }
+
+  return(list("answers"=rule_answers, "col_count"=col_count))
+}
+```
+
+Load all demo data
+
+```{r}
+file_base <- "../web_application/data/consult_records"
+users <- list.dirs(file_base)
+users = users[users != file_base]
+
+all_consults <- list()
+
+for (user_path in users) {
+  user_tag <- stringr::str_replace(user_path, paste0(file_base, "/"), "")
+  consult_records <- list.files(user_path)
+  for (file_path in consult_records) {
+    consult_data <- jsonlite::fromJSON(file.path(user_path, file_path))
+    
+    consult_data[["wct_data"]] <- wct_data_augmentation(consult_data$wct_data)
+    
+    all_consults[[user_tag]][[consult_data$consult_id]] <- consult_data
+  }
+}
+```
+
+```{r}
+filter_consults <- function(consults, start, stop) {
+  new_list = list()
+  for (consult in consults) {
+    if (dplyr::between(as.Date(consult$date), start, stop)) {
+      new_list[[consult$consult_id]] <- consult
+    }
+  }
+  
+  return(new_list)
+}
+
+selected_consults <- filter_consults(all_consults$user_1, base::Sys.Date() - lubridate::weeks(4), base::Sys.Date())
+```
+
+```{r}
+generate_wisonsin_session_graph <- function() {
+  
+}
+
+generate_wisonsin_time_graph <- function(consults, line_colour=NULL, plot_colour=NULL, bg_colour=NULL) {
+  wisconsin_data <- data.frame(matrix(ncol=3, nrow=0))
+  colnames(wisconsin_data) <- c("date", "wct_score", "pss_score")
+  for (consult in consults) {
+    wisconsin_data[nrow(wisconsin_data) + 1,] = c(consult$Date, sum(consult$WCT_Answers), sum(consult$PSS_Answers))
+  }
+
+  wisconsin_data <- wisconsin_data |>
+    dplyr::mutate(date = as.Date(date)) |>
+    dplyr::arrange(date)
+
+  p <- ggplot(wisconsin_data, aes(x=date, y=wct_score, group=1, color=line_colour)) + xlab("Date") +
+    geom_point() + geom_line() +
+    scale_color_manual(values=c(line_colour)) +
+    theme(
+      panel.background = element_rect(fill = 'white', color = 'white'),
+      panel.grid.major.x = element_blank(),
+      panel.grid.major.y = element_line(color = 'lightgrey'))
+
+  if (!is.null(bg_colour)) {
+    p + theme(plot.background = element_rect(fill=bg_colour, color=bg_colour))
+
+  }
+  
+  p
+  # plot_ly(wisconsin_data, x = ~date, y = ~score, type = 'scatter', mode = 'lines+markers')
+
+}
+
+generate_wisonsin_time_graph(all_consults$user_1)
+```
+
+```{r}
+answers <- consult_data$WCT_Answers
+change_ids <- consult_data$WCT_Change_IDs
+change_ids = c(0, change_ids, length(answers))
+
+diffs = diff(change_ids)
+col_count = max(diffs)
+
+rule_answers = list()
+for (idx in 1:(length(change_ids)-1)) {
+  start_idx <- change_ids[idx]+1
+  end_idx <- change_ids[idx+1]
+  
+  # print(c(start_idx, end_idx))
+  rule_set <- answers[start_idx:end_idx]
+  rule_answers[[idx]] = c(rule_set, array(dim=col_count-length(rule_set)))
+}
+```
+
+```{r}
+df <- data.frame(team=rep(c('A', 'B', 'C'), each=3),
+                 position=rep(c('Guard', 'Forward', 'Center'), times=3),
+                 points=c(14, 8, 8, 16, 3, 7, 17, 22, 26))
+
+ggplot(df, aes(fill=position, y=points, x=team)) + 
+  geom_bar(position='stack', stat='identity')
+```
 
 ```{r}
 
-weeks =10
-dropout = 2
-dropout_ids = pracma::randperm(1:weeks)[1:(weeks-dropout)]
-scores = base::round((30 - (1:weeks) * 0.5) + stats::rnorm(weeks, 0, 1))[dropout_ids]
-week_dates = seq.Date(from = lubridate::today() - lubridate::weeks(weeks), to = lubridate::today(), by = 'weeks')[dropout_ids]
+generate_module_track_df <- function(consults) {
+  time_data <- data.frame(matrix(ncol=4, nrow=0))
+  colnames(time_data) <- c("consult_id", "date", "wct_score", "pss_score")
+  for (consult in consults) {
+    time_data[nrow(time_data) + 1,] = c(
+      consult$Consult_ID, consult$Date,
+      sum(consult$WCT_Answers), sum(consult$PSS_Answers)
+    )
+  }
 
-wisconsin_data <- data.frame(
-  date = week_dates, score = scores
-)
+  time_data <- time_data |>
+    dplyr::mutate(date = as.Date(date)) |>
+    dplyr::arrange(date)
 
-nrow(wisconsin_data["score"])
-nrow(wisconsin_data["date"])
+  return(time_data)
+}
 
-save
+consults_df <- generate_module_track_df(all_consults$user_1)
+```
 
-plot(wisconsin_data)
+```{r}
+pivot_df <- consults_df |> tidyr::pivot_longer(
+    !c(consult_id, date), names_to="test", values_to = "score"
+    ) |>
+    dplyr::mutate(score = as.numeric(score)) |> 
+    dplyr::select(!c(consult_id))
+
+print(pivot_df)
+
+# df_melted <- stats::aggregate(data = pivot_df, score ~ dates, mean)
+# names(df_melted) <- c("year", "mean_dday_30")
+
+p <- ggplot(pivot_df, aes(fill=test, y=score, x=date, group=1)) +
+  geom_bar(position='stack', stat='identity')
+
+p
+```
+
+```{r}
+df
+pivot_df
+```
+
+```{r}
+sort(sapply(ls(),function(x){object.size(get(x))})) 
 ```

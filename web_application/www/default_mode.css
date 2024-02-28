@@ -8,6 +8,7 @@
   background-color: #E6F1F7;
   border-radius: 10px;
   padding: 10px;
+  height: 100%;
 }
 
 .grid_title {
@@ -19,9 +20,51 @@
   display: flex; justify-content: center; align-items: center;
 }
 
+.profile_layout {
+  display: grid;
+  grid-template-areas:
+    'sidebar profile_overview';
+  gap: 20px;
+  grid-template-columns: 20% calc(80% - 20px);
+}
+
+.barchart_layout {
+  display: grid;
+  grid-template-areas:
+  'bar_chart consult';
+  gap: 20px;
+  grid-template-columns: 65% calc(35% - 20px);
+}
+
+
+.user_layout_1 {
+  display: grid;
+  grid-template-areas:
+    'wct pss';
+  gap: 20px;
+  grid-template-columns: calc(50%-10px) calc(50% - 10px);
+}
+
+.consult_layout_1 {
+  display: grid;
+  grid-template-areas:
+    'wct spiral';
+  gap: 20px;
+  grid-template-columns: calc(50%-10px) calc(50% - 10px);
+}
+
+.consult_layout_2 {
+  display: grid;
+  grid-template-areas:
+    'select_consult pss';
+  gap: 20px;
+  grid-template-columns: calc(50%-10px) calc(50% - 10px);
+}
+
 /* Overview level */
 .profile_container {
   display: grid;
+  grid-area: profile_overview;
   grid-template-areas:
         'title title ring'
         'age cond ring';
@@ -36,6 +79,7 @@
 /* Dashbaord level */
 .spiral_container {
   display: grid;
+  grid-area: spiral;
   grid-template-areas:
         'title spiral_radar'
         'spiral_score spiral_radar';
@@ -61,12 +105,48 @@ table, tr, td {
 
 .pss_container {
   display: grid;
+  grid-area: pss;
+  height: 100%; width:100%;
   grid-template-areas:
-        'title pss_score';
-  grid-template-columns: 40% 60%;
+        'title title'
+        'pss_score pss_bar';
+  grid-template-columns: 50% 50%;
 }
 
 .pss_score_holder {
   display: flex; justify-content: center; align-items: center;
   border-radius: 5px; grid-area: "pss_score";
+}
+
+.wct_container {
+  display: grid;
+  grid-area: wct;
+
+  height: 100%; width:100%;
+  grid-template-areas:
+        'title title title'
+        'wct_table wct_table wct_table'
+        'wct_table wct_table wct_table';
+}
+
+.summary_card {
+  display: grid;
+  height: 100%; width:100%;
+  grid-template-areas:
+    "consult_number date"
+    "pss_box pss_box"
+    "wct_box wct_box";
+}
+
+.wct_table, .wct_row, .wct_data {
+  height: 100%; width:100%;
+  justify-content: center; align-content: center;
+  padding: 10px;
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
 }

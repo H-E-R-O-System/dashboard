@@ -1,0 +1,111 @@
+{
+    "consult_id": "7k6i4r2stul3bfn",
+    "user_id": 1,
+    "date": "2024-01-10T16:05:43.392854",
+    "pss_data": {
+        "answers": [
+            2,
+            3,
+            2,
+            2,
+            3,
+            1,
+            0,
+            0,
+            2
+        ]
+    },
+    "wct_data": {
+        "answers": [
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+        ],
+        "change_ids": [
+            5,
+            11,
+            16,
+            22,
+            29
+        ]
+    },
+    "vat_data": {
+        "answers": [
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+        ],
+        "times": [
+            0.9957410836549625,
+            1.0580349202373747,
+            0.9223286373444528,
+            1.050663653028889,
+            0.8842947543246026,
+            1.0805773235947767,
+            1.0424495507497247,
+            1.0024192527752982,
+            0.9729178845876004,
+            0.9830036175442114,
+            0.8959684956292697,
+            1.030159371213327,
+            1.0803189881101602,
+            1.0773318543567276,
+            1.0798867214065655,
+            1.0366396153949942,
+            0.9979195488966686,
+            1.118606874321367,
+            0.9439534929163691,
+            1.061444604884983
+        ]
+    },
+    "clock_data": {
+        "angle_errors": [
+            12.603443129921283,
+            10.215689949678943
+        ]
+    }
+}

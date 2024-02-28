@@ -21,6 +21,8 @@ library(purrr)
 library(shinyTime)
 library(fmsb)
 library(glue)
+library(ggplot2)
+library(plotly)
 
 Sys.setenv(VROOM_CONNECTION_SIZE=5000072)
 
@@ -69,7 +71,31 @@ student1_data <- radar_df[c("Max", "Min", "patient_1"), ]
 
 gpcog_score = c(1, 0, 0, 1, 1, 1, 1, 1, 0)
 
+file_base <- "data/consult_records"
+users <- list.dirs(file_base)
+users = users[users != file_base]
+
+all_consults <- list()
+
+for (user_path in users) {
+  user_tag <- stringr::str_replace(user_path, paste0(file_base, "/"), "")
+  consult_records <- list.files(user_path)
+  for (file_path in consult_records) {
+    consult_data <- jsonlite::fromJSON(file.path(user_path, file_path))
+
+    consult_data[["wct_data"]] <- wct_data_augmentation(consult_data$wct_data)
+
+    all_consults[[user_tag]][[consult_data$consult_id]] <- consult_data
+  }
+}
 
 hero_blue <-  "#274251"
 blue_2 <- "#89A7AD"
 blue_3 <- "#E6F1F7"
+
+week_days <- c("Monday"=1, "Tuesday"=2, "Wednesday"=3, "Thurdsay"=4,
+               "Friday"=5, "Saturday"=6, "Sunday"=7)
+
+today <- base::Sys.Date()
+base_date <- lubridate::origin
+lubridate::hour(base_date) <- -1
